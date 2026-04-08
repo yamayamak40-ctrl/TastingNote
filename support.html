@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>サポート | TastingNote</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+JP:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0e0b09;
+      --surface: #16110e;
+      --border: #2e2016;
+      --accent: #9b3a2a;
+      --gold: #c9a96e;
+      --gold-light: #e8d5a8;
+      --text: #d4c5b0;
+      --text-muted: #7a6a58;
+      --text-subtle: #4a3e32;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Serif JP', serif;
+      font-weight: 300;
+      line-height: 1.9;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(155, 58, 42, 0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 30% at 90% 80%, rgba(201, 169, 110, 0.06) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 80px 32px 120px;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      margin-bottom: 80px;
+      animation: fadeDown 1s ease both;
+    }
+
+    .app-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 5vw, 44px);
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: var(--gold-light);
+      line-height: 1.3;
+      margin-bottom: 24px;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin: 0 auto;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold));
+    }
+
+    .divider::after {
+      background: linear-gradient(90deg, var(--gold), transparent);
+    }
+
+    .divider-icon {
+      font-size: 18px;
+      color: var(--gold);
+    }
+
+    .intro {
+      margin-top: 48px;
+      padding: 28px 32px;
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      background: rgba(22, 17, 14, 0.6);
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 2;
+      animation: fadeUp 1s 0.2s ease both;
+    }
+
+    /* Sections */
+    .section {
+      margin-bottom: 56px;
+      animation: fadeUp 0.8s ease both;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      min-width: 28px;
+    }
+
+    h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--gold-light);
+      letter-spacing: 0.05em;
+    }
+
+    .section-body {
+      font-size: 14px;
+      line-height: 2;
+      color: var(--text);
+    }
+
+    .section-body p {
+      margin-bottom: 12px;
+    }
+
+    .section-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .sub-heading {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      margin: 20px 0 12px;
+    }
+
+    /* Feature list */
+    .item-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .item-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 8px 0;
+      font-size: 13.5px;
+      color: var(--text);
+      border-bottom: 1px solid rgba(46, 32, 22, 0.5);
+    }
+
+    .item-list li:last-child {
+      border-bottom: none;
+    }
+
+    .item-list li::before {
+      content: '—';
+      color: var(--accent);
+      font-size: 12px;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    /* FAQ */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .faq-item:first-child {
+      border-top: 1px solid var(--border);
+    }
+
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      padding: 20px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      color: var(--gold-light);
+      font-family: 'Noto Serif JP', serif;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.7;
+      transition: color 0.2s;
+    }
+
+    .faq-question:hover {
+      color: var(--gold);
+    }
+
+    .faq-q-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--accent);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .faq-chevron {
+      margin-left: auto;
+      flex-shrink: 0;
+      color: var(--text-muted);
+      font-size: 12px;
+      transition: transform 0.3s ease;
+      margin-top: 4px;
+    }
+
+    .faq-item.open .faq-chevron {
+      transform: rotate(180deg);
+    }
+
+    .faq-answer {
+      display: none;
+      padding: 0 0 20px 36px;
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 2;
+    }
+
+    .faq-item.open .faq-answer {
+      display: block;
+    }
+
+    .faq-answer .item-list {
+      margin-top: 8px;
+    }
+
+    .faq-answer .item-list li {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* Contact section */
+    .contact-block {
+      background: linear-gradient(135deg, rgba(22,17,14,0.8), rgba(16,11,9,0.9));
+      border: 1px solid var(--border);
+      border-top: 2px solid var(--gold);
+      padding: 36px 40px;
+      margin-top: 0;
+    }
+
+    .contact-block h2 {
+      margin-bottom: 24px;
+    }
+
+    .contact-row {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 8px 24px;
+      font-size: 13.5px;
+      margin-bottom: 32px;
+    }
+
+    .contact-label {
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    .contact-value {
+      color: var(--text);
+    }
+
+    .contact-value a {
+      color: var(--gold);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .contact-value a:hover {
+      color: var(--gold-light);
+    }
+
+    .contact-note {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    /* Related */
+    .related-block {
+      margin-top: 56px;
+      padding: 28px 32px;
+      border: 1px solid var(--border);
+      background: rgba(22, 17, 14, 0.4);
+    }
+
+    .related-block h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--gold-light);
+      margin-bottom: 16px;
+      letter-spacing: 0.05em;
+    }
+
+    .related-block a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13.5px;
+      color: var(--gold);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .related-block a:hover {
+      color: var(--gold-light);
+    }
+
+    .related-block a::before {
+      content: '→';
+      font-size: 12px;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 64px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--text-subtle);
+      letter-spacing: 0.05em;
+    }
+
+    /* Animations */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      .wrapper { padding: 48px 20px 80px; }
+      .intro { padding: 20px; }
+      .contact-block { padding: 24px 20px; }
+      .contact-row { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+
+    <!-- Header -->
+    <header>
+      <span class="app-label">TastingNote</span>
+      <h1>サポート</h1>
+      <div class="divider"><span class="divider-icon">🍷</span></div>
+      <div class="intro">
+        TastingNoteをご利用いただきありがとうございます。<br>
+        このページでは、本アプリに関するお問い合わせ先や、基本的なご案内を掲載しています。
+      </div>
+    </header>
+
+    <!-- 1. アプリについて -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-number">01</span>
+        <h2>アプリについて</h2>
+      </div>
+      <div class="section-body">
+        <p>TastingNoteは、ワインのテイスティング記録を整理・保存・振り返りできるアプリです。</p>
+        <p>外観、香り、味わい、品質評価などを記録し、自分だけのワインノートとして活用できます。</p>
+      </div>
+    </div>
+
+    <!-- 2. 主な機能 -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-number">02</span>
+        <h2>主な機能</h2>
+      </div>
+      <div class="section-body">
+        <ul class="item-list">
+          <li>ワインテイスティング記録の作成・編集</li>
+          <li>国、地域、原産地呼称、品種、ヴィンテージ等の記録</li>
+          <li>香り・味わいのフレーバー記録</li>
+          <li>記録の一覧表示、検索、絞り込み、並び替え</li>
+          <li>品種やフレーバー等のマスタ管理</li>
+          <li>ボトル画像の追加</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 3. よくある質問 -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-number">03</span>
+        <h2>よくある質問</h2>
+      </div>
+      <div class="section-body">
+        <div class="faq-list">
+
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+              <span class="faq-q-label">Q.</span>
+              <span>記録したデータはどこに保存されますか？</span>
+              <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+              現時点では、主にお使いの端末内に保存されます。
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+              <span class="faq-q-label">Q.</span>
+              <span>記録を削除できますか？</span>
+              <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+              はい。アプリ内から記録の編集・削除が可能です。
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+              <span class="faq-q-label">Q.</span>
+              <span>ボトル画像を追加できますか？</span>
+              <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+              はい。対応しているバージョンでは、記録ごとに画像を追加できます。
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+              <span class="faq-q-label">Q.</span>
+              <span>データの引き継ぎや同期はできますか？</span>
+              <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+              現時点では、クラウド同期やアカウント連携に対応していない場合があります。今後のアップデートで対応する可能性があります。
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+              <span class="faq-q-label">Q.</span>
+              <span>アプリが正常に動作しません。</span>
+              <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+              以下をお試しください。
+              <ul class="item-list">
+                <li>アプリを再起動する</li>
+                <li>端末を再起動する</li>
+                <li>アプリを最新版にアップデートする</li>
+                <li>必要に応じて空き容量を確認する</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. お問い合わせ -->
+    <div class="section">
+      <div class="contact-block">
+        <div class="section-header" style="margin-bottom:24px;">
+          <span class="section-number">04</span>
+          <h2>お問い合わせ</h2>
+        </div>
+        <p class="contact-note">不具合報告、ご要望、ご質問は以下までご連絡ください。</p>
+        <div class="contact-row">
+          <span class="contact-label">運営者</span>
+          <span class="contact-value">山本憲吾</span>
+          <span class="contact-label">メール</span>
+          <span class="contact-value"><a href="mailto:yamayamak40@gmail.com">yamayamak40@gmail.com</a></span>
+        </div>
+        <p class="contact-note">お問い合わせの際は、可能であれば以下の情報を添えてください。</p>
+        <ul class="item-list">
+          <li>ご利用端末</li>
+          <li>iOSのバージョン</li>
+          <li>アプリのバージョン</li>
+          <li>発生した事象の詳細</li>
+          <li>再現手順</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 5. 免責事項 -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-number">05</span>
+        <h2>免責事項</h2>
+      </div>
+      <div class="section-body">
+        <p>本アプリは、ワインの記録・整理を目的としたツールです。</p>
+        <p>記録内容の正確性、完全性、有用性について、運営者は保証するものではありません。</p>
+        <p>また、アプリの利用により生じた損害について、運営者は責任を負いかねる場合があります。</p>
+      </div>
+    </div>
+
+    <!-- 6. 関連情報 -->
+    <div class="related-block">
+      <h3>関連情報</h3>
+      <a href="https://yamayamak40-ctrl.github.io/TastingNote/privacy.html" target="_blank" rel="noopener">プライバシーポリシー</a>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <span>TastingNote サポートページ</span>
+      <span>最終更新日：2026年4月6日</span>
+    </footer>
+
+  </div>
+
+  <script>
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      item.classList.toggle('open');
+    }
+  </script>
+</body>
+</html>
